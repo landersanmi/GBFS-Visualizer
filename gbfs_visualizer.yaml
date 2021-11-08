@@ -1,0 +1,326 @@
+openapi: 3.0.1
+
+info:
+  title: GBFS Visualizer |
+    This API allows consulting open data in a visual way from the different gbfs systems.
+  version: 1.0.0
+
+tags:
+  - name: Visualizing
+    description: Operations related with the visualization of data in a map.
+  
+  - name: RawData
+    description: Operations related with the manipulation of raw data. 
+
+paths:
+  # All URLs from a gbfs system
+  /gbfs/{id}:
+    parameters:
+      - $ref: "#/components/parameters/id"
+    
+    get:
+      summary: Get GBFS URLs information
+      description: Retrieve all the accesible URLs of a specific GBFS System
+      tags:
+        -RawData
+      operationId: get-gbfs
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref : "#components/schemas/gbfs_urls"
+        "400":
+          description: "The provided GBFS was not found"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Inexistent GBFS Id"
+
+    put:
+      summary: Puts GBFS URLs information
+      description: Puts new URLs for a specific GBFS System
+      tags:
+        -RawData
+      operationId: put-gbfs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/gbfs_urls"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/okMessage"
+        "400":
+          description: The provided parameters for GBFS URLs are incorrect
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              examples:
+                invalidAttributes:
+                  value: "Not valid attributes."
+      
+      delete:
+        summary: Deletes GBFS URLs information
+        description: Removes the URLs information associated to a GBFS
+        tags:
+          - RawData
+        operationId: delete-gbfs
+        responses:
+          "200":
+            description: "OK"
+          default:
+              description: Unexpected error
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/errorMessage'
+
+  # System imformation of a GBFS
+  /gbfs/{id}/system_information:
+    parameters:
+      - $ref: "#/components/parameters/id"
+      
+    get:
+      summary: Get GBFS System information
+      description: Retrieve all the System information of a specific GBFS
+      tags:
+        -RawData
+      operationId: get-system_information
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref : "#components/schemas/gbfs_system_information"
+        "400":
+          description: "The provided GBFS was not found"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Inexistent GBFS Id"
+
+    put:
+      summary: Puts GBFS System information
+      description: Puts new System information for a specific GBFS
+      tags:
+        -RawData
+      operationId: put-system_information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/gbfs_system_information"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/okMessage"
+        "400":
+          description: The provided parameters for GBFS System information are incorrect
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              examples:
+                invalidAttributes:
+                  value: "Not valid attributes."
+      
+    delete:
+      summary: Deletes GBFS System information
+      description: Removes the System information related to a GBFS
+      tags:
+        - RawData
+      operationId: delete-system_information
+      responses:
+        "200":
+          description: "OK"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+
+  # Station information of a GBFS
+  /gbfs/{id}/station_information:
+    parameters:
+      - $ref: "#/components/parameters/id"
+      
+    get:
+      summary: Get GBFS Station information
+      description: Retrieve all the Station information of a specific GBFS
+      tags:
+        -RawData
+      operationId: get-station_information
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref : "#components/schemas/gbfs_station_information"
+        "400":
+          description: "The provided GBFS was not found"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Inexistent GBFS Id"
+
+    put:
+      summary: Puts GBFS Station information
+      description: Puts new Station information for a specific GBFS
+      tags:
+        -RawData
+      operationId: put-station_information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/gbfs_station_information"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/okMessage"
+        "400":
+          description: The provided parameters for GBFS Station information are incorrect
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              examples:
+                invalidAttributes:
+                  value: "Not valid attributes."
+      
+    delete:
+      summary: Deletes GBFS Station information
+      description: Removes the Station information related to a GBFS
+      tags:
+        - RawData
+      operationId: delete-station_information
+      responses:
+        "200":
+          description: "OK"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+
+  # Station status of a GBFS
+  /gbfs/{id}/station_status:
+    parameters:
+      - $ref: "#/components/parameters/id"
+      
+    get:
+      summary: Get GBFS Station status information
+      description: Retrieve all the Station status information of a specific GBFS
+      tags:
+        -RawData
+      operationId: get-station_status
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref : "#components/schemas/gbfs_station_status"
+        "400":
+          description: "The provided GBFS was not found"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Inexistent GBFS Id"
+
+  # Free bike status of a GBFS
+  /gbfs/{id}/free_bike_status:
+    parameters:
+      - $ref: "#/components/parameters/id"
+      
+    get:
+      summary: Get GBFS Free bike status information
+      description: Retrieve all the Free bike status information of a specific GBFS
+      tags:
+        -RawData
+      operationId: get-free_bike_status
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref : "#components/schemas/gbfs_sfree_bike_status"
+        "400":
+          description: "The provided GBFS was not found"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Inexistent GBFS Id"
+
+
+components:
+
+  parameters:
+    id:
+      description: ID of the GBFS system
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/id"
+
+  schemas:
+    id:
+      type: string
+    
+    gbfs_urls:
+      type: string
+      description: JSON containing all accesible GBFS URLs
+    
+    gbfs_system_information:
+      type: string
+      description: JSON containing all the system information about the GBFS
+    
+    gbfs_station_information:
+      type: string
+      description: JSON containing all the station information about the GBFS
+
+    gbfs_station_status:
+      type: string
+      description: JSON containing all the station information about the GBFS
+    
+    gbfs_free_bike_status:
+      type: string
+      description: JSON containing all the station information about the GBFS
+    
+    errorMessage:
+      type: string
+      maxLength: 256
+      description: A text message describing an error
+    
+    okMessage:
+      type: string
+      maxLenght: 256
+      description: A message that describes an OK response
+
