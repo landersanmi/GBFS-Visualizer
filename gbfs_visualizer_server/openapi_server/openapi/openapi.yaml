@@ -1,0 +1,632 @@
+openapi: 3.0.1
+info:
+  title: GBFS Visualizer | This API allows consulting open data in a visual way from
+    the different gbfs systems.
+  version: 1.1.0
+servers:
+- url: /
+tags:
+- description: Operations related with the visualization of data in a map.
+  name: Visualizing
+- description: Operations related with the manipulation of raw data.
+  name: RawData
+paths:
+  /api/v1/gbfs/{gbfs_system_id}:
+    get:
+      description: Retrieve all the accesible URLs of a specific GBFS System
+      operationId: get_gbfs
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gbfs_system'
+          description: OK
+        "400":
+          content:
+            text/html:
+              example: Inexistent GBFS Id
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided GBFS was not found
+      summary: Get GBFS URLs information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+    post:
+      description: Posts new URLs for a specific GBFS System
+      operationId: post_gbfs
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gbfs_system'
+        required: true
+      responses:
+        "200":
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/okMessage'
+          description: OK
+        "400":
+          content:
+            text/html:
+              examples:
+                invalidAttributes:
+                  value: Not valid attributes.
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided parameters for GBFS URLs are incorrect
+      summary: Posts GBFS URLs information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+  /api/v1/gbfs/{gbfs_system_id}/free_bike_status:
+    get:
+      description: Retrieve all the Free bike status information of a specific GBFS
+      operationId: get_free_bike_status
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gbfs_free_bike_status'
+          description: OK
+        "400":
+          content:
+            text/html:
+              example: Inexistent GBFS Id
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided GBFS was not found
+      summary: Get GBFS Free bike status information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+  /api/v1/gbfs/{gbfs_system_id}/map:
+    get:
+      description: Retrieve all the Free bike status information of a specific GBFS
+        in a Map
+      operationId: get_map
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      responses:
+        "200":
+          content:
+            text/html:
+              example: HERE GOES THE MAP
+              schema:
+                description: HERE GOES THE MAP
+                type: string
+          description: OK
+        "400":
+          content:
+            text/html:
+              example: Inexistent GBFS Id
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided GBFS was not found
+      summary: Get GBFS Map of the stations or free bike status
+      tags:
+      - Visualizing
+      x-openapi-router-controller: openapi_server.controllers.visualizing_controller
+  /api/v1/gbfs/{gbfs_system_id}/station_information:
+    get:
+      description: Retrieve all the Station information of a specific GBFS
+      operationId: get_station_information
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gbfs_station_information'
+          description: OK
+        "400":
+          content:
+            text/html:
+              example: Inexistent GBFS Id
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided GBFS was not found
+      summary: Get GBFS Station information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+    post:
+      description: Posts new Station information for a specific GBFS
+      operationId: post_station_information
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gbfs_station_information'
+        required: true
+      responses:
+        "200":
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/okMessage'
+          description: OK
+        "400":
+          content:
+            text/html:
+              examples:
+                invalidAttributes:
+                  value: Not valid attributes.
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided parameters for GBFS Station information are incorrect
+      summary: Posts GBFS Station information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+  /api/v1/gbfs/{gbfs_system_id}/station_status:
+    get:
+      description: Retrieve all the Station status information of a specific GBFS
+      operationId: get_station_status
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gbfs_station_status'
+          description: OK
+        "400":
+          content:
+            text/html:
+              example: Inexistent GBFS Id
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided GBFS was not found
+      summary: Get GBFS Station status information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+  /api/v1/gbfs/{gbfs_system_id}/system_information:
+    get:
+      description: Retrieve all the System information of a specific GBFS
+      operationId: get_system_information
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/gbfs_system_information'
+          description: OK
+        "400":
+          content:
+            text/html:
+              example: Inexistent GBFS Id
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided GBFS was not found
+      summary: Get GBFS System information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+    post:
+      description: Posts new System information for a specific GBFS
+      operationId: post_system_information
+      parameters:
+      - description: ID of the GBFS system
+        explode: false
+        in: path
+        name: gbfs_system_id
+        required: true
+        schema:
+          $ref: '#/components/schemas/gbfs_system_id'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gbfs_system_information'
+        required: true
+      responses:
+        "200":
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/okMessage'
+          description: OK
+        "400":
+          content:
+            text/html:
+              examples:
+                invalidAttributes:
+                  value: Not valid attributes.
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+          description: The provided parameters for GBFS System information are incorrect
+      summary: Posts GBFS System information
+      tags:
+      - RawData
+      x-openapi-router-controller: openapi_server.controllers.raw_data_controller
+components:
+  parameters:
+    gbfs_system_id:
+      description: ID of the GBFS system
+      explode: false
+      in: path
+      name: gbfs_system_id
+      required: true
+      schema:
+        $ref: '#/components/schemas/gbfs_system_id'
+      style: simple
+  schemas:
+    gbfs_system_id:
+      title: id
+      type: string
+    gbfs_system:
+      example:
+        name: name
+        id: id
+        url: url
+      properties:
+        id:
+          title: id
+          type: string
+        name:
+          description: Name of the GBFS System
+          maxLength: 256
+          title: name
+          type: string
+        url:
+          description: URL to the gbfs.json file of the GBFS System, containing all
+            the accesible URLs
+          title: url
+          type: string
+      title: gbfs_system
+      type: object
+    gbfs_system_information:
+      example:
+        gbfs_system_id: gbfs_system_id
+        timezone: timezone
+        name: name
+        company_url: company_url
+        phone_number: phone_number
+        url: url
+        operator: operator
+        email: email
+        license_url: license_url
+      properties:
+        gbfs_system_id:
+          title: id
+          type: string
+        url:
+          description: URL to the system_information.json file of the GBFS System,
+            containing all the information related with the correspondent company
+          title: url
+          type: string
+        name:
+          description: Name of the company
+          title: name
+          type: string
+        operator:
+          description: Operator of the company
+          title: operator
+          type: string
+        company_url:
+          description: URL to the company homepage
+          title: company_url
+          type: string
+        phone_number:
+          description: Phone of the company
+          title: phone_number
+          type: string
+        email:
+          description: Email of the company
+          title: email
+          type: string
+        timezone:
+          description: Timezone of the company
+          title: timezone
+          type: string
+        license_url:
+          description: URL to the company license
+          title: license_url
+          type: string
+      title: gbfs_system_information
+      type: object
+    gbfs_station_information:
+      example:
+        gbfs_system_id: gbfs_system_id
+        stations:
+        - '{}'
+        - '{}'
+        url: url
+      properties:
+        gbfs_system_id:
+          title: id
+          type: string
+        url:
+          description: URL to the station_information.json file of the GBFS System,
+            containing all the information related with the correspondent stations
+            of the system
+          title: url
+          type: string
+        stations:
+          items:
+            properties:
+              station_id:
+                description: ID of the Station
+                type: string
+              name:
+                description: Name of the Station
+                type: string
+              short_name:
+                description: Code of the Station
+                type: string
+              lat:
+                description: Latitude of the Station location
+                type: string
+              lon:
+                description: Longitude of the Station location
+                type: string
+              region_id:
+                description: ID of the region of the Station location
+                type: string
+              capacity:
+                description: Number of bike that can be locked in the station
+                type: string
+            type: object
+          title: stations
+          type: array
+      title: gbfs_station_information
+      type: object
+    stations:
+      items:
+        properties:
+          station_id:
+            description: ID of the Station
+            type: string
+          name:
+            description: Name of the Station
+            type: string
+          short_name:
+            description: Code of the Station
+            type: string
+          lat:
+            description: Latitude of the Station location
+            type: string
+          lon:
+            description: Longitude of the Station location
+            type: string
+          region_id:
+            description: ID of the region of the Station location
+            type: string
+          capacity:
+            description: Number of bike that can be locked in the station
+            type: string
+        type: object
+      title: stations
+      type: array
+    gbfs_station_status:
+      example:
+        gbfs_system_id: gbfs_system_id
+        stations:
+        - '{}'
+        - '{}'
+        url: url
+      properties:
+        gbfs_system_id:
+          description: ID of the related GBFS System
+          maxLength: 256
+          title: gbfs_system_id
+          type: string
+        url:
+          description: URL to the station_status.json file of the GBFS System, containing
+            all the information related with the correspondent stations status of
+            the system
+          title: url
+          type: string
+        stations:
+          items:
+            properties:
+              station_id:
+                description: ID of the Station
+                type: string
+              num_bikes_available:
+                description: Number of bikes available in the station
+                type: string
+              num_docks_available:
+                description: Number of docks available in the station
+                type: string
+              is_installed:
+                description: Is the station working
+                type: string
+              is_renting:
+                description: Is someone renting
+                type: string
+              is_returning:
+                description: Is someone returning
+                type: string
+              last_resported:
+                description: The time of the last report
+                type: string
+            type: object
+          title: stations
+          type: array
+      title: gbfs_station_status
+      type: object
+    stations_status:
+      items:
+        properties:
+          station_id:
+            description: ID of the Station
+            type: string
+          num_bikes_available:
+            description: Number of bikes available in the station
+            type: string
+          num_docks_available:
+            description: Number of docks available in the station
+            type: string
+          is_installed:
+            description: Is the station working
+            type: string
+          is_renting:
+            description: Is someone renting
+            type: string
+          is_returning:
+            description: Is someone returning
+            type: string
+          last_resported:
+            description: The time of the last report
+            type: string
+        type: object
+      title: stations
+      type: array
+    gbfs_free_bike_status:
+      example:
+        gbfs_system_id: gbfs_system_id
+        bikes:
+        - '{}'
+        - '{}'
+        url: url
+      properties:
+        gbfs_system_id:
+          description: ID of the related GBFS System
+          maxLength: 256
+          title: gbfs_system_id
+          type: string
+        url:
+          description: URL to the station_status.json file of the GBFS System, containing
+            all the information related with the correspondent stations status of
+            the system
+          title: url
+          type: string
+        bikes:
+          items:
+            properties:
+              bike_id:
+                description: ID of the Bike
+                type: string
+              name:
+                description: Name of the Bike
+                type: string
+              type:
+                description: Type of the Bike
+                type: string
+              lat:
+                description: Latitude of the Bike location
+                type: string
+              lon:
+                description: Longitude of the Bike location
+                type: string
+              is_reserved:
+                description: Is the Bike reserved
+                type: string
+              is_disables:
+                description: Is the Bike disabled
+                type: string
+            type: object
+          title: bikes
+          type: array
+      title: gbfs_free_bike_status
+      type: object
+    bikes:
+      items:
+        properties:
+          bike_id:
+            description: ID of the Bike
+            type: string
+          name:
+            description: Name of the Bike
+            type: string
+          type:
+            description: Type of the Bike
+            type: string
+          lat:
+            description: Latitude of the Bike location
+            type: string
+          lon:
+            description: Longitude of the Bike location
+            type: string
+          is_reserved:
+            description: Is the Bike reserved
+            type: string
+          is_disables:
+            description: Is the Bike disabled
+            type: string
+        type: object
+      title: bikes
+      type: array
+    errorMessage:
+      description: A text message describing an error
+      maxLength: 256
+      type: string
+    okMessage:
+      description: A message that describes an OK response
+      type: string
