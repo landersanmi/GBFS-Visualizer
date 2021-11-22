@@ -3,7 +3,8 @@ import six
 
 from openapi_server import util
 
-from services import gbfs_visualizing_service
+from openapi_server.services import gbfs_visualizing_service
+import flask
 
 
 def get_map(gbfs_system_id):  # noqa: E501
@@ -16,4 +17,6 @@ def get_map(gbfs_system_id):  # noqa: E501
 
     :rtype: str
     """
-    return gbfs_visualizing_service.get_map(gbfs_system_id)
+
+    #map = gbfs_visualizing_service.get_map(gbfs_system_id)
+    return flask.render_template('login.html', error =None)
