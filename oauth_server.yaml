@@ -1,0 +1,120 @@
+openapi: 3.0.1
+
+info:
+  title: OAuth Server |
+    This API allows users log-in management with OAuth.
+  version: 1.1.0
+
+tags:
+  - name: Users
+    description: Operations related with the manipulation of users raw data
+  
+paths:
+  /api/v1/user/{user_id}:
+    parameters:
+      - $ref: "#/components/parameters/user_id"
+    
+    get:
+      summary: Get a User information
+      description: Retrieve information of a specific User
+      tags: ["Users"]
+      operationId: get-user
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/user"
+        "400":
+          description: "The provided GBFS was not found"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              example: "Inexistent User Id"
+
+    post:
+      summary: Posts a User information
+      description: Posts new user information for saving it
+      tags: ["Users"]
+      operationId: post-user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/okMessage"
+        "400":
+          description: The provided id for user is incorrect
+          content:
+            text/html:
+              schema:
+                $ref: "#/components/schemas/errorMessage"
+              examples:
+                invalidAttributes:
+                  value: "Not a valid ID."
+    
+    delete:
+      summary: Deletes a user information
+      description: Removes the stored user information
+      tags: ["Users"]
+      operationId: delete-user
+      responses:
+        "200":
+          description: "OK"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+
+components:
+
+  parameters:
+    user_id:
+      description: ID of a user
+      name: user_id
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/user_id"
+
+  schemas:
+    user_id:
+      type: string
+    
+    user:
+      type: object
+      properties:
+        
+        id:
+          $ref: "#/components/schemas/user_id"
+        
+        full_name:
+          type: string
+          maxLength: 256
+          description: Full name os the user
+        
+        email:
+          type: string
+          maxLength: 512
+          description: Email of the user
+    
+    errorMessage:
+      type: string
+      maxLength: 256
+      description: A text message describing an error
+    
+
+    okMessage:
+      type: string
+      description: A message that describes an OK response
