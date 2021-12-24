@@ -146,18 +146,19 @@
         //////////////////////////////////////////////////////////////////
         function addInfoWindowStation(nombre, bikes_free, docks_free){
             const infoWindowStation = new google.maps.InfoWindow({
-                content:  "<strong>"+ nombre +"</strong>" +
-                          "<p> Bicicletas Libres -> " + bikes_free + "</p>" + 
-                          "<p> Anclajes Libres -> " + docks_free + "</p>"
+                content:  "<div class=\"row align-items-center\"> <strong>"+ nombre +"</strong> </div>" +
+                          "<hr>"+
+                          "<p> Bicicletas Libres &rarr; " + bikes_free + " </p>" + 
+                          "<p> Anclajes Libres &rarr; " + docks_free + " </p>"
             });
             infoWindows.push(infoWindowStation);
         }
 
         function addInfoWindowFreeBike(bike_id, is_disabled, is_Reserved){
             const infoWindowFreeBike = new google.maps.InfoWindow({
-                content:  "<strong>"+ bike_id +"</strong>" +
-                          "<p> Esta deshabilitada -> " + is_disabled + "</p>" + 
-                          "<p> Esta Reservada -> " + is_Reserved + "</p>" 
+                content:  "<div class=\"row align-items-center\"> <strong>"+ bike_id +"</strong> </div>" +
+                          "<p> Esta deshabilitada &rarr; " + is_disabled + " </p>" + 
+                          "<p> Esta Reservada &rarr; " + is_Reserved + " </p>" 
             });
             infoWindows.push(infoWindowFreeBike);
         }
