@@ -8,9 +8,11 @@ from google.auth.transport import requests
 from openapi_server import encoder
 
 from flask import Flask, url_for, redirect, render_template, request
+from flask import current_app
 from flask_babel import Babel, gettext, ngettext
 import os
 import jinja2
+
 
 import requests
 
@@ -27,7 +29,17 @@ def main():
                 arguments={'title': 'GBFS Visualizer | This API allows consulting open data in a visual way from the different gbfs systems.'},
                 pythonic_params=True)
     
-    #babel = Babel(app)
+    # babel = Babel(app)
+    
+    # LANGUAGES = {
+    #     'en': 'English',
+    #     'es': 'Español',
+    #     'eus': 'Euskera'
+    # }
+    # @babel.localeselector
+    # def get_locale():
+    #     return request.accept_languages.best_match(LANGUAGES.keys())
+        
 
     @app.route('/login')
     def maint():

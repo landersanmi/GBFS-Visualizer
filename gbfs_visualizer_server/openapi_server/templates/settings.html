@@ -1,0 +1,37 @@
+
+{% block css %}
+    <link href="{{ url_for('static', filename='css/settings.css') }}" rel="stylesheet">
+{% endblock css %}
+
+{% block js %}
+    <script src="{{ url_for('static', filename='js/settings.js') }}"> </script>
+{% endblock js %}
+
+
+
+
+<nav id="c-circle-nav" class="c-circle-nav">
+    <button id="c-circle-nav__toggle" class="c-circle-nav__toggle">
+      <span>Toggle</span>
+    </button>
+    <ul class="c-circle-nav__items">
+      <li class="c-circle-nav__item">
+        <a href="http://127.0.0.1:9090/" class="c-circle-nav__link" >
+          <i id="icon_settings_logout" class="fa fa-sign-out"></i>
+        </a>
+      </li>
+  
+      <li class="c-circle-nav__item">
+        <a href="#" class="c-circle-nav__link">
+          <i id="icon_settings_language" class="spain flag"> ES </i>
+        </a>
+      </li>
+
+      <li class="c-circle-nav__item">
+        <a href="#" class="c-circle-nav__link">
+          <i id="icon_settings_language" class="flag-icon flag-icon-us"> EN</i>
+        </a>
+      </li>
+      <!-- more items here -->
+    </ul>
+</nav>

@@ -14,7 +14,7 @@ paths:
       - Users
       summary: Get a User information
       description: Retrieve information of a specific User
-      operationId: get-user
+      operationId: getUser
       parameters:
       - name: user_id
         in: path
@@ -44,7 +44,7 @@ paths:
       - Users
       summary: Posts a User information
       description: Posts new user information for saving it
-      operationId: post-user
+      operationId: postUser
       parameters:
       - name: user_id
         in: path
@@ -76,31 +76,6 @@ paths:
               examples:
                 invalidAttributes:
                   value: Not a valid ID.
-      x-swagger-router-controller: Users
-    delete:
-      tags:
-      - Users
-      summary: Deletes a user information
-      description: Removes the stored user information
-      operationId: delete-user
-      parameters:
-      - name: user_id
-        in: path
-        description: ID of a user
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/user_id'
-      responses:
-        "200":
-          description: OK
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorMessage'
       x-swagger-router-controller: Users
 components:
   schemas:

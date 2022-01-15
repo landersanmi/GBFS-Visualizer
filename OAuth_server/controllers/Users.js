@@ -1,34 +1,33 @@
 'use strict';
+var usersService = require('../service/UsersService');
 
-var utils = require('../utils/writer.js');
-var Users = require('../service/UsersService');
-
-module.exports.deleteUser = function deleteUser (req, res, next, user_id) {
-  Users.deleteUser(user_id)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+const getUser = (req, res, next, user_id) => {
+  try{
+    var user = usersService.getUser(user_id);
+  }catch(err){
+    return "404 Invalid User_ID";
+  }
+  user.then( function (user){
+    if(user !== undefined){
+      res.send(user);
+      return user;
+    }else{
+      res.send("undefined");
+      return user;
+    }
+  })
+  .catch(function(err){
+    res.send(err);
+    return err;
+  });
 };
 
-module.exports.getUser = function getUser (req, res, next, user_id) {
-  Users.getUser(user_id)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+const postUser =  (req, res, next, body, user_id) =>{
+  usersService.postUser(body, user_id);
+  res.send("200 User Posted");
 };
 
-module.exports.postUser = function postUser (req, res, next, body, user_id) {
-  Users.postUser(body, user_id)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+module.exports = {
+  getUser,
+  postUser
 };

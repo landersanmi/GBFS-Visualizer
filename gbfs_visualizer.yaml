@@ -268,33 +268,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/errorMessage"
               example: "Inexistent GBFS Id"
-    
-  # Map of the bike or station status GBFS
-  /api/v1/gbfs/{gbfs_system_id}/map:
-    parameters:
-      - $ref: "#/components/parameters/gbfs_system_id"
-    
-    get:
-      summary: Get GBFS Map of the stations or free bike status
-      description: Retrieve all the Free bike status information of a specific GBFS in a Map
-      tags: ["Visualizing"]
-      operationId: get-map
-      responses:
-        "200":
-          description: "OK"
-          content:
-            text/html:
-              schema:
-                type: string
-                description: HERE GOES THE MAP
-              example: HERE GOES THE MAP
-        "400":
-          description: "The provided GBFS was not found"
-          content:
-            text/html:
-              schema:
-                $ref: "#/components/schemas/errorMessage"
-              example: "Inexistent GBFS Id"
 
 components:
 

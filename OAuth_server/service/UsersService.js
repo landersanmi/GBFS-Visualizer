@@ -1,19 +1,5 @@
 'use strict';
-
-
-/**
- * Deletes a user information
- * Removes the stored user information
- *
- * user_id user_id ID of a user
- * no response value expected for this operation
- **/
-exports.deleteUser = function(user_id) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
-}
-
+var usersDao = require('../daos/UsersDao');
 
 /**
  * Get a User information
@@ -24,16 +10,19 @@ exports.deleteUser = function(user_id) {
  **/
 exports.getUser = function(user_id) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "full_name" : "full_name",
-  "id" : "id",
-  "email" : "email"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
+    if (user_id >= 0) {
+      var usersDaoPromise = usersDao.findOne(user_id);
+      usersDaoPromise.then(
+        (user) =>{ 
+          if(user !== undefined){
+            return resolve(user);
+          }else{
+            return resolve();
+          }
+        }
+      );
     } else {
-      resolve();
+      reject("404 Invalid USER ID");
     }
   });
 }
@@ -49,13 +38,25 @@ exports.getUser = function(user_id) {
  **/
 exports.postUser = function(body,user_id) {
   return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
+    if (Object.keys(body).length > 0) {
+      if(body.body !== undefined){
+        resolve(body.body);
+      }else{
+        resolve(body);
+      }
     } else {
-      resolve();
+      reject("404 No params recived for creating user");
     }
+
+  }).then(
+    function(body){
+      usersDao.insert(body);
+  })
+  .catch(
+    function(err){
+      console.log("POST USER RECHAZADO --> " + err);
   });
+
 }
+
 

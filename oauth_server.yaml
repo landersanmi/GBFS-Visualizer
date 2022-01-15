@@ -18,7 +18,7 @@ paths:
       summary: Get a User information
       description: Retrieve information of a specific User
       tags: ["Users"]
-      operationId: get-user
+      operationId: getUser
       responses:
         "200":
           description: "OK"
@@ -38,7 +38,7 @@ paths:
       summary: Posts a User information
       description: Posts new user information for saving it
       tags: ["Users"]
-      operationId: post-user
+      operationId: postUser
       requestBody:
         required: true
         content:
@@ -62,21 +62,6 @@ paths:
                 invalidAttributes:
                   value: "Not a valid ID."
     
-    delete:
-      summary: Deletes a user information
-      description: Removes the stored user information
-      tags: ["Users"]
-      operationId: delete-user
-      responses:
-        "200":
-          description: "OK"
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorMessage'
-
 components:
 
   parameters:

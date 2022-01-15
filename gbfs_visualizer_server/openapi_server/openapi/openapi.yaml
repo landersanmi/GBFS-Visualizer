@@ -111,40 +111,7 @@ paths:
       tags:
       - RawData
       x-openapi-router-controller: openapi_server.controllers.raw_data_controller
-  /api/v1/gbfs/{gbfs_system_id}/map:
-    get:
-      description: Retrieve all the Free bike status information of a specific GBFS
-        in a Map
-      operationId: get_map
-      parameters:
-      - description: ID of the GBFS system
-        explode: false
-        in: path
-        name: gbfs_system_id
-        required: true
-        schema:
-          $ref: '#/components/schemas/gbfs_system_id'
-        style: simple
-      responses:
-        "200":
-          content:
-            text/html:
-              example: HERE GOES THE MAP
-              schema:
-                description: HERE GOES THE MAP
-                type: string
-          description: OK
-        "400":
-          content:
-            text/html:
-              example: Inexistent GBFS Id
-              schema:
-                $ref: '#/components/schemas/errorMessage'
-          description: The provided GBFS was not found
-      summary: Get GBFS Map of the stations or free bike status
-      tags:
-      - Visualizing
-      x-openapi-router-controller: openapi_server.controllers.visualizing_controller
+
   /api/v1/gbfs/{gbfs_system_id}/station_information:
     get:
       description: Retrieve all the Station information of a specific GBFS

@@ -21,9 +21,10 @@
                 center: { lat: 43.262985, lng: -2.935013},
                 zoom:11,
                 optimize:true,
+                fullscreenControl: false,
             });
 
-            // Add a style-selector control to the map.
+            // Add a GBFS selector control to the map.
             const selector = document.getElementById("selector_gbfs");
             map.controls[google.maps.ControlPosition.TOP_LEFT].push(selector);
             var gbfs_system_id = selector[selector.selectedIndex].id;
@@ -226,7 +227,6 @@
         </div>
         </div>
     </div>
-
     <div id="map">
     </div>
 {% endblock %}
