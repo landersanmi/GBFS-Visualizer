@@ -16,11 +16,11 @@ $(document).ready(function(){
         // Add a style-selector control to the map.
         const selector = document.getElementById("selector_gbfs");
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(selector);
-        var gbfs_system_id = selector[selector.selectedIndex].id;
+        var gbfs_system_id = selector.options[selector.selectedIndex].id;
         loadMapBikes(gbfs_system_id);
 
         $('#selector_gbfs').on('change', function(){
-            loadMapBikes(this[this.selectedIndex].id);
+            loadMapBikes(this.options[this.selectedIndex].id);
         });
     }
 

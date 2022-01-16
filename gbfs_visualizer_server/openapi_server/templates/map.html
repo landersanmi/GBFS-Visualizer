@@ -8,10 +8,20 @@
     <!-- <script src="{{ url_for('static', filename='js/map.js') }}"> </script> -->
     <script src="{{ url_for('static', filename='js/components.js') }}"> </script>
     <script>
-        
+
         let map;
         let markers = [];
         let infoWindows = [];
+        var filtered_stations = [];
+        var loadingDiv;
+
+        function addFilteredStation(station_id){
+            filtered_stations.push(station_id);
+        }
+
+        function deleteFilteredStations(){
+            filtered_stations = [];
+        }
     
         //////////////////////////////////////////////////////////////////
         //                            MAP                               //
@@ -24,46 +34,97 @@
                 fullscreenControl: false,
             });
 
-            // Add a GBFS selector control to the map.
-            const selector = document.getElementById("selector_gbfs");
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(selector);
-            var gbfs_system_id = selector[selector.selectedIndex].id;
-            loadMapBikes(gbfs_system_id);
+            const filterContainer = document.getElementById("filter_container");
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(filterContainer);
 
-            $('#selector_gbfs').on('change', function(){
-                loadMapBikes(this[this.selectedIndex].id);
+            loadingDiv = document.getElementById("loading_div");
+            loadingDiv.style.visibility = 'hidden';
+            map.controls[google.maps.ControlPosition.CENTER].push(loadingDiv);
+
+            
+            const selector = document.getElementById("selector_gbfs");
+            const minBikesRange = document.getElementById("min_bikes_range");
+            const minStationsRange = document.getElementById("min_stations_range");
+
+            var selectedGBFSName = $('#input_gbfs').val();
+            var gbfs_system_id = $('#selector_gbfs option[value="' + selectedGBFSName + '"]').attr('id');
+            var minBikes = minBikesRange.value;
+            var minStations = minStationsRange.value;
+            
+            loadingDiv.style.visibility = 'visible';
+            loadingDiv.style.display = 'block';
+            loadMapBikes(gbfs_system_id, minBikes, minStations);            
+
+            $('#input_gbfs').on('change',  function(){
+                loadingDiv.style.visibility = 'visible';
+                loadingDiv.style.display = 'block';
+                var selectedGBFSName = $('#input_gbfs').val();
+                gbfs_system_id = $('#selector_gbfs option[value="' + selectedGBFSName + '"]').attr('id');
+                loadMapBikes(gbfs_system_id, minBikes, minStations);
+            });
+
+            $('#min_bikes_range').on('change', function(){
+                loadingDiv.style.visibility = 'visible';
+                loadingDiv.style.display = 'block';
+                minBikes = minBikesRange.value;
+                document.getElementById('label_min_bikes').innerHTML = "Nº Minimo de bicis: " + minBikes;
+                loadMapBikes(gbfs_system_id, minBikes, minStations);
+            });
+
+            $('#min_stations_range').on('change', function(){
+                loadingDiv.style.visibility = 'visible';
+                loadingDiv.style.display = 'block';
+                minStations = minStationsRange.value;
+                document.getElementById('label_min_stations').innerHTML = "Nº Minimo de estaciones: " + minStations;
+                loadMapBikes(gbfs_system_id, minBikes, minStations);
+            });
+
+            zoomChangeListener = google.maps.event.addListener(map,'zoom_changed',function (event) {
+                zoomChangeBoundsListener = google.maps.event.addListener(map,'bounds_changed',function (event) {  
+                    loadingDiv.style.visibility= 'hidden';
+                    loadingDiv.style.display = 'none';
+                google.maps.event.removeListener(zoomChangeBoundsListener);
+                });
             });
         }
 
         //////////////////////////////////////////////////////////////////
         //                            AJAX                              //
         //////////////////////////////////////////////////////////////////
-        function loadMapBikes(gbfs_system_id){
-           $.when(loadStationStatusAjax(gbfs_system_id)).then(loadStationInfAndFreeBikesAjax(gbfs_system_id));
+        function loadMapBikes(gbfs_system_id, minBikes, minStations){
+            //$.when(loadStationStatusAjax(gbfs_system_id, minBikes, minStations)).done(loadStationInfAndFreeBikesAjax(gbfs_system_id));
+            loadStationStatusAjax(gbfs_system_id, minBikes, minStations);
+            
         }
         
-        function loadStationStatusAjax(gbfs_system_id){
+        function loadStationStatusAjax(gbfs_system_id, minBikes, minStations){
             return $.ajax({
                 type: "get",
                 url: 'api/v1/gbfs/' + gbfs_system_id + '/station_status',
                 success: function(result){
                     result = JSON.parse(JSON.stringify(result));
-                    var stations_status = [];
                     stations_status = result['stations'];
                     if(stations_status.length !== 0){
                         deleteInfoWindows();
+                        deleteFilteredStations();
                         stations_status.forEach(station_status_json => {
-                            addInfoWindowStation(gbfs_system_id, station_status_json['num_bikes_available'], station_status_json['num_docks_available']);
+                            if(station_status_json['num_bikes_available'] >= minBikes && station_status_json['num_docks_available'] >= minStations){
+                                addFilteredStation(station_status_json['station_id']);
+                                addInfoWindowStation(gbfs_system_id, station_status_json['num_bikes_available'], station_status_json['num_docks_available']);
+                            }
                         });
                     }else{
                         loadFreeBikeInfoWindowsAjax(gbfs_system_id)
                     }
+                    loadStationInfAndFreeBikesAjax(gbfs_system_id);
                 },
                 error: function(result){
-                     loadFreeBikeInfoWindowsAjax(gbfs_system_id)        
+                    loadFreeBikeMarkersAjax(gbfs_system_id);
+                    loadFreeBikeInfoWindowsAjax(gbfs_system_id);    
                 }
             });
         }
+
 
         function loadStationInfAndFreeBikesAjax(gbfs_system_id){
             return $.ajax({
@@ -79,14 +140,18 @@
                         deleteMarkers();
                         var index = 0;
                         stations.forEach(station_json => {
-                            position = new google.maps.LatLng(station_json['lat'], station_json['lon']);
-                            addMarker(position, "https://iframe.nextbike.net/4com/icons/bilbaobizi_icon_22x33.png", index);
-                            index++;
+                            if(filtered_stations.includes(station_json['station_id'])){
+                                position = new google.maps.LatLng(station_json['lat'], station_json['lon']);
+                                addMarker(position, "https://iframe.nextbike.net/4com/icons/bilbaobizi_icon_22x33.png", index);
+                                index++;
+                            }
                         });
                         showMarkers();
                     }else{
                         loadFreeBikeMarkersAjax(gbfs_system_id)
                     }
+                    loadingDiv.style.visibility= 'hidden';
+                    loadingDiv.style.display='none';
                 },
                 error: function(result) {
                     loadFreeBikeMarkersAjax(gbfs_system_id)
@@ -107,10 +172,12 @@
                         bikes.forEach(bikes_json => {
                             addInfoWindowFreeBike(bikes_json['bike_id'], bikes_json['is_disabled'], bikes_json['is_reserved']);
                         });
+                    }else{
+
                     }  
                 },
                 error: function(result) {
-                    alert('Error on loadMapBikes AJAX.get FREE_BIKE_STATUS 1');
+                    alert('No ha sido posible cargar el Sistema GBFS, prueba a introducir uno de los sistemas proporcionados. ');
                 }
             });
         }
@@ -121,6 +188,7 @@
                 url: 'api/v1/gbfs/' + gbfs_system_id + '/free_bike_status',
                 success: function(result){
                     result = JSON.parse(JSON.stringify(result));
+                    console.log(result);
                     var bikes = [];
                     bikes = result['bikes'];
                     var center = new google.maps.LatLng(bikes[Math.floor(bikes.length/2)]['lat'], bikes[Math.floor(bikes.length/2)]['lon']);
@@ -135,9 +203,11 @@
                         });
                         showMarkers();
                     }     
+                    loadingDiv.style.visibility= 'hidden';
+                    loadingDiv.style.display = 'none';
                 },
                 error: function(result) {
-                    alert('Error on loadMapBikes AJAX.get FREE_BIKE_STATUS');
+                    console.log("Error al cargar el sistema GBFS");
                 }
             });
         }
@@ -145,21 +215,40 @@
         //////////////////////////////////////////////////////////////////
         //                        INFO WINDOWS                          //
         //////////////////////////////////////////////////////////////////
-        function addInfoWindowStation(nombre, bikes_free, docks_free){
+        function addInfoWindowStation(gbfs_name, bikes_free, docks_free){
             const infoWindowStation = new google.maps.InfoWindow({
-                content:  "<div class=\"row align-items-center\"> <strong>"+ nombre +"</strong> </div>" +
-                          "<hr>"+
-                          "<p> Bicicletas Libres &rarr; " + bikes_free + " </p>" + 
-                          "<p> Anclajes Libres &rarr; " + docks_free + " </p>"
+                content:    '<div id="content">'+
+                                '<h6><strong>GBFS:&nbsp;</strong> '+ gbfs_name +'</h6>' +
+                                '<div id="bodyContent">'+
+                                    '<hr>'+
+                                    '<ul>'+
+                                        '<li><p> Nº Bicicletas Libres &rarr; ' + bikes_free + '</p></li>' + 
+                                        '<li><p> Nº Anclajes Libres &rarr; ' + docks_free + '</p></li>' +
+                                    '</ul>'+
+                                '</div>' +
+                            '</div>'
             });
             infoWindows.push(infoWindowStation);
         }
 
-        function addInfoWindowFreeBike(bike_id, is_disabled, is_Reserved){
+        function addInfoWindowFreeBike(bike_id, is_disabled, is_reserved){
+            var disabled = reserved = 'NO';
+            if(is_disabled === true){
+                disabled = "SI";
+            }else if(is_reserved === true){
+                reserved = "SI";
+            }
             const infoWindowFreeBike = new google.maps.InfoWindow({
-                content:  "<div class=\"row align-items-center\"> <strong>"+ bike_id +"</strong> </div>" +
-                          "<p> Esta deshabilitada &rarr; " + is_disabled + " </p>" + 
-                          "<p> Esta Reservada &rarr; " + is_Reserved + " </p>" 
+                content:    '<div id="content">'+
+                                '<h6><strong>ID:&nbsp;</strong> '+ bike_id +'</h6>' +
+                                '<div id="bodyContent">'+
+                                    '<hr>'+
+                                    '<ul>'+
+                                        '<li><p> ¿Esta deshabilitada? &rarr; ' + disabled + '</p></li>' + 
+                                        '<li><p> ¿Esta Reservada? &rarr; ' + reserved + '</p></li>' +
+                                    '</ul>'+
+                                '</div>' +
+                            '</div>'
             });
             infoWindows.push(infoWindowFreeBike);
         }
@@ -219,16 +308,39 @@
 {% endblock %}
 
 {% block content %}
-    <div class= container>
-        <div class = "row justify-content-md-left">
-        <div class = "col col-lg-3">
-            <select class="form-select form-select-sm mb-3" id= "selector_gbfs" style="width: 250px;margin-left: 30px;margin-top: 30px;" >
-            </select>
+    <div class= container id="filter_container" style="width: 20%;background-color: white; padding-bottom: 1%; padding-left: 2%; padding-right: 2.5%; border-radius: 25px;margin-top: 14px; margin-left: 14px;">
+        <div class = "row">
+            <div class = "col col-lg-3" style="width:100%; padding-top: 5%;">
+                <h4 style="text-align: center;"> GBFS Visualizer </h4>
+            </div>
         </div>
+        <div class = "row">
+            <div class = "col col-lg-3" style="width:100%;">
+                <label for="input_gbfs" class="form-label" style="margin-top:3%;font-size: small;"> Sistema GBFS:</label>
+                <input list="selector_gbfs" id="input_gbfs" placeholder="Search / Select" value="Bilbaobizi (Bilbao)" style="width:100%; margin-bottom:8%; height: 30%;">
+                <datalist id="selector_gbfs"></datalist>
+            </div>
         </div>
+        <div class = "row">
+            <div class = "col col-lg-3" style="width:100%;">
+                <label for="min_bikes_range" id="label_min_bikes" class="form-label" style="font-size: small;">Nº Minimo de bicis: 0</label>
+                <input type="range" class="form-range" min="0" max="30" value="0" step="1" id="min_bikes_range">
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "col col-lg-3" style="width:100%;">
+                <label for="min_stations_range" id="label_min_stations" class="form-label" style="font-size: small;">Nº Minimo de anclajes: 0</label>
+                <input type="range" class="form-range" min="0" max="30" value="0"step="1" id="min_stations_range">
+            </div>
+        </div>
+    </div>
+    <div class="spinner-border text-warning" id="loading_div" role="status" style="visibility:hidden;display:none;width: 5rem; height: 5rem;">
+        <span class="sr-only">Loading...</span>
     </div>
     <div id="map">
     </div>
+
+
 {% endblock %}
 
 
