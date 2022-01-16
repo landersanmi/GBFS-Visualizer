@@ -2,32 +2,51 @@
 <!doctype html>
 <html>
 <head>
-    <title>Google SignIn</title>
+    <title>SignIn GBFS Visualizer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="/js/auth.js"></script>  
 
-        
+    <link rel="stylesheet" type="text/css" href="/css/auth.css" /> 
     <link rel="stylesheet/less" type="text/css" href="/css/auth.less" /> 
-    <script src="https://cdn.jsdelivr.net/npm/less@4.1.1" ></script>
-    <style>
-        body { padding-top:70px; }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.1/less.js" ></script>
 </head>
 <body>
-<div class="container justify-content-center">
-    <div class="jumbotron text-center text-primary">
-        <h1><span class="fa fa-lock"></span> Social Authentication</h1>
-        <p>Login or Register with:</p>
-        <a href="/auth/google">
-            <div class="google-btn">
-                <div class="google-icon-wrapper">
-                  <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="container">    
+        
+        <div id="loginbox"> 
+            <div class="row justify-content-center">                
+                <div class="earthIcon">
+                    <img src="https://img.icons8.com/ultraviolet/120/000000/google-maps-new.png"/>
                 </div>
-                <p class="btn-text"><b>Sign in with google</b></p>
             </div>
-        </a>
+            
+            <div class="panel panel-primary" >
+                <div class="panel-heading">
+                    <div class="panel-title text-center"> <h3>Bienvenido a GBFS Visualizer</h3></div>
+                </div>     
+    
+                <div class="panel-body">
+                    <div class="d-flex justify-content-center">
+                        <a href="/auth/google">
+                            <div class="google-btn">
+                                <div class="google-icon-wrapper" style="padding-left: 19px;">
+                                    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                                </div>      
+                                <p class="btn-text"><b>Sign in with google</b></p>   
+                            </div>
+                        </a>
+                    </div>   
+                </div>     
+
+            </div>  
+        </div>
     </div>
-</div>
+
+    <div id="particles"></div>
 </body>
 </html> 
 
