@@ -10,3 +10,57 @@ html,body{
     margin: 0;
     padding: 0;
 }
+
+#filter_container{
+    width: 20%;
+    background-color: white;
+    padding-bottom: 1%;
+    padding-left: 2%;
+    padding-right: 2.5%;
+    border-radius: 24px;
+    margin-top: 14px;
+    margin-left: 14px;
+    min-width: 225px;
+}
+@media (max-width: 480px) {
+    #filter_container{
+        margin-left: 2.5%;
+        width: 95%;
+        margin-top: 2.5%;
+        padding-bottom: 4%;
+    }
+}
+
+#title_col{
+    width: 100%;
+    padding-top: 5%;
+}
+#gbfs_col, #min_bikes_col, #min_stations_col{
+    width: 100%;
+}
+
+#title{
+    text-align: center;
+}
+
+#label_input_gbfs{
+    margin-top: 3%;
+    font-size: small; 
+}
+
+#label_min_bikes, #label_min_stations{
+    font-size: small;
+}
+
+#input_gbfs{
+    width:100%; 
+    margin-bottom:8%; 
+    height: 30%;
+}
+
+#loading_div{
+    visibility:hidden;
+    display:none;
+    width: 5rem; 
+    height: 5rem;
+}

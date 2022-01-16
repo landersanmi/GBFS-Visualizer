@@ -308,39 +308,35 @@
 {% endblock %}
 
 {% block content %}
-    <div class= container id="filter_container" style="width: 20%;background-color: white; padding-bottom: 1%; padding-left: 2%; padding-right: 2.5%; border-radius: 25px;margin-top: 14px; margin-left: 14px;">
+    <div class= container id="filter_container">
         <div class = "row">
-            <div class = "col col-lg-3" style="width:100%; padding-top: 5%;">
-                <h4 style="text-align: center;"> GBFS Visualizer </h4>
+            <div class = "col col-lg-3" id="title_col">
+                <h4 id="title"> GBFS Visualizer </h4>
             </div>
         </div>
         <div class = "row">
-            <div class = "col col-lg-3" style="width:100%;">
-                <label for="input_gbfs" class="form-label" style="margin-top:3%;font-size: small;"> Sistema GBFS:</label>
-                <input list="selector_gbfs" id="input_gbfs" placeholder="Search / Select" value="Bilbaobizi (Bilbao)" style="width:100%; margin-bottom:8%; height: 30%;">
+            <div class = "col col-lg-3" id="gbfs_col">
+                <label for="input_gbfs" id="label_input_gbfs" class="form-label"> Sistema GBFS:</label>
+                <input list="selector_gbfs" id="input_gbfs" placeholder="Search / Select" value="Bilbaobizi (Bilbao)">
                 <datalist id="selector_gbfs"></datalist>
             </div>
         </div>
         <div class = "row">
-            <div class = "col col-lg-3" style="width:100%;">
-                <label for="min_bikes_range" id="label_min_bikes" class="form-label" style="font-size: small;">Nº Minimo de bicis: 0</label>
+            <div class = "col col-lg-3" id="min_bikes_col">
+                <label for="min_bikes_range" id="label_min_bikes" class="form-label">Nº Minimo de bicis: 0</label>
                 <input type="range" class="form-range" min="0" max="30" value="0" step="1" id="min_bikes_range">
             </div>
         </div>
         <div class = "row">
-            <div class = "col col-lg-3" style="width:100%;">
-                <label for="min_stations_range" id="label_min_stations" class="form-label" style="font-size: small;">Nº Minimo de anclajes: 0</label>
+            <div class = "col col-lg-3" id="min_stations_col">
+                <label for="min_stations_range" id="label_min_stations" class="form-label">Nº Minimo de anclajes: 0</label>
                 <input type="range" class="form-range" min="0" max="30" value="0"step="1" id="min_stations_range">
             </div>
         </div>
     </div>
-    <div class="spinner-border text-warning" id="loading_div" role="status" style="visibility:hidden;display:none;width: 5rem; height: 5rem;">
-        <span class="sr-only">Loading...</span>
-    </div>
+    <div class="spinner-border text-warning" id="loading_div" role="status"></div>
     <div id="map">
     </div>
-
-
 {% endblock %}
 
 
