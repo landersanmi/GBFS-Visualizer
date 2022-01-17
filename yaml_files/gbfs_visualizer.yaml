@@ -6,9 +6,6 @@ info:
   version: 1.1.0
 
 tags:
-  - name: Visualizing
-    description: Operations related with the visualization of data in a map.
-  
   - name: RawData
     description: Operations related with the manipulation of raw data. 
 
@@ -65,23 +62,7 @@ paths:
               examples:
                 invalidAttributes:
                   value: "Not valid attributes."
-    
-    #delete:
-      #summary: Deletes GBFS URLs information
-      #description: Removes the URLs information associated to a GBFS
-      #tags: ["RawData"]
-      #operationId: delete-gbfs
-      #responses:
-        #"200":
-          #description: "OK"
-        #default:
-            #description: Unexpected error
-            #content:
-              #application/json:
-                #schema:
-                  #$ref: '#/components/schemas/errorMessage'
-    
-    
+     
   # System imformation of a GBFS
   /api/v1/gbfs/{gbfs_system_id}/system_information:
     parameters:
@@ -135,22 +116,6 @@ paths:
                 invalidAttributes:
                   value: "Not valid attributes."
     
-    #delete:
-      #summary: Deletes GBFS System information
-      #description: Removes the System information related to a GBFS
-      #tags: ["RawData"]
-      #operationId: delete-system_information
-      #responses:
-        #"200":
-          #description: "OK"
-        #default:
-          #description: Unexpected error
-          #content:
-            #application/json:
-              #schema:
-                #$ref: '#/components/schemas/errorMessage'
-      
-
   # Station information of a GBFS
   /api/v1/gbfs/{gbfs_system_id}/station_information:
     parameters:
@@ -204,21 +169,6 @@ paths:
                 invalidAttributes:
                   value: "Not valid attributes."
     
-    #delete:
-      #summary: Deletes GBFS Station information
-      #description: Removes the Station information related to a GBFS
-      #tags: ["RawData"]
-      #operationId: delete-station_information
-      #responses:
-        #"200":
-          #description: "OK"
-        #default:
-          #description: Unexpected error
-          #content:
-            #application/json:
-              #schema:
-                #$ref: '#/components/schemas/errorMessage'
-
   # Station status of a GBFS
   /api/v1/gbfs/{gbfs_system_id}/station_status:
     parameters:
@@ -289,9 +239,6 @@ components:
       type: object
       properties:
         id:
-          #type: string
-          #maxLength: 256
-          #description: ID of the GBFS System
           $ref: "#/components/schemas/gbfs_system_id"
         name:
           type: string
@@ -305,14 +252,7 @@ components:
     gbfs_system_information:
       type: object
       properties:
-        #id:
-          #type: string
-          #maxLength: 256
-          #description: ID of the GBFS System Information
         gbfs_system_id:
-          #type: string
-          #maxLength: 256
-          #description: ID of the related GBFS System
           $ref: "#/components/schemas/gbfs_system_id"
         url:
           type: string
@@ -343,13 +283,7 @@ components:
     gbfs_station_information:
       type: object
       properties:
-        #_id: 
-          #type: string
-          #description: ID of the GBFS Station Information
         gbfs_system_id:
-          #type: string
-          #maxLength: 256
-          #description: ID of the related GBFS System
           $ref: "#/components/schemas/gbfs_system_id"
         url:
           type: string
@@ -388,9 +322,6 @@ components:
     gbfs_station_status:
       type: object
       properties:
-        #_id: 
-          #type: string
-          #description: ID of the GBFS Station Status
         gbfs_system_id:
           type: string
           maxLength: 256
@@ -428,7 +359,6 @@ components:
             type: string
             description: The time of the last report
 
-    
     gbfs_free_bike_status:
       type: object
       properties:
@@ -441,7 +371,6 @@ components:
           description: URL to the station_status.json file of the GBFS System, containing all the information related with the correspondent stations status of the system
         bikes:  
           $ref: "#/components/schemas/bikes"
-    
     
     bikes:
       type: array
@@ -470,13 +399,11 @@ components:
             type: string
             description: Is the Bike disabled
     
-
     errorMessage:
       type: string
       maxLength: 256
       description: A text message describing an error
     
-
     okMessage:
       type: string
       description: A message that describes an OK response

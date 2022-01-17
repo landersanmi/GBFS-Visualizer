@@ -50,12 +50,18 @@ $(document).ready(function() {
       mask.classList.remove(activeClass);
     }
 
+    /**
+     *  Get the prefered language of the user settings in navigator
+     */
     function getLang() {
       if (navigator.languages != undefined) 
         return navigator.languages[0]; 
       return navigator.language;
     }
 
+    /**
+     *  Manage settings language buttons
+     */
     var language;
     var languageFromQuery = document.getElementById('language').textContent;
 
@@ -67,7 +73,6 @@ $(document).ready(function() {
 
     var lang1, lang2, lang1Parent, lang2Parent;
     var TOKEN = document.getElementById('token').textContent;
-    console.log("LANG RECIBIDO", language);
     if(language==='eu_ES') language = 'eu';
     if(language==='es'){
       lang1 = document.getElementById('icon_language1');

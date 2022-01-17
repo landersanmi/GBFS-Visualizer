@@ -96,7 +96,7 @@ components:
           description: Email of the user
       example:
         full_name: full_name
-        id: id
+        _id: id
         email: email
     errorMessage:
       maxLength: 256

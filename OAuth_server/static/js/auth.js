@@ -42,13 +42,13 @@
  $(function(){
              
      $('#particles').particleground({
-         minSpeedX: 0.1,
+         minSpeedX: 0.15,
          maxSpeedX: 0.7,
-         minSpeedY: 0.1,
+         minSpeedY: 0.15,
          maxSpeedY: 0.7,
          directionX: 'center', // 'center', 'left' or 'right'. 'center' = dots bounce off edges
          directionY: 'center', // 'center', 'up' or 'down'. 'center' = dots bounce off edges
-         density: 10000, // How many particles will be generated: one particle every n pixels
+         density: 8000, // How many particles will be generated: one particle every n pixels
          dotColor: '#eee',
          lineColor: '#eee',
          particleRadius: 7, // Dot size

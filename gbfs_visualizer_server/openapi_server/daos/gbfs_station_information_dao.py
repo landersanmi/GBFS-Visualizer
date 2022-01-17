@@ -22,21 +22,3 @@ def find_one(gbfs_system_id):
     result = collec.find_one({"gbfs_system_id": gbfs_system_id})
     client.close()
     return result
-
-def find(params_JSON):
-    client = get_client()
-    collec = get_collection(client)
-    result = collec.find(params_JSON)
-    client.close()
-    return result
-
-def update(params_JSON):
-    client = get_client()
-    collec = get_collection(client)
-    collec.update(params_JSON)
-    client.close()
-
-def remove(params_JSON):
-    client = get_client()
-    collec = get_collection(client)
-    client.close()

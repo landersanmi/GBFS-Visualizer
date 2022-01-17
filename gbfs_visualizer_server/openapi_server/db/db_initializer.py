@@ -2,11 +2,10 @@ import pandas as pd
 import requests
 import datetime
 
-def initialize_db_data(start):
+def initialize_db_data():
     df = pd.read_csv('gbfs_systems.csv')
 
     for index, gbfs in df.iterrows():
-        if index < start: continue 
         gbfs_system_json = {
             "gbfs_system_id" : gbfs['System ID'],
             "name" : gbfs['Name'],
@@ -105,7 +104,7 @@ def initialize_db_data(start):
                 "license_url": str(license_url)
             }
             
-            req_post_system_inf = requests.post('http://127.0.0.1:8080/api/v1/gbfs/' + gbfs['System ID'] + '/system_information', json=system_information_json)
+            requests.post('http://127.0.0.1:8080/api/v1/gbfs/' + gbfs['System ID'] + '/system_information', json=system_information_json)
 
             req_get_station_inf = None
             try:
@@ -185,11 +184,11 @@ def initialize_db_data(start):
                     "stations": stations
                 }
 
-                req_post_system_inf = requests.post('http://127.0.0.1:8080/api/v1/gbfs/' + gbfs['System ID'] + '/station_information', json=station_information_json)
+                requests.post('http://127.0.0.1:8080/api/v1/gbfs/' + gbfs['System ID'] + '/station_information', json=station_information_json)
         else:
             print("NOTHING DONE WITH", gbfs['System ID'])
 
 start = datetime.datetime.now()        
-initialize_db_data(0)
+initialize_db_data()
 end = datetime.datetime.now()
 print("Tiempo transcurrido -->", end-start)

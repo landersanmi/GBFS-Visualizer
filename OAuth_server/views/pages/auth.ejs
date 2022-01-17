@@ -4,22 +4,33 @@
 <head>
     <title>SignIn GBFS Visualizer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
+    <!-- GOOGLE FONTS-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="/js/auth.js"></script>  
 
+    <!-- JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- CSS & LESS -->
     <link rel="stylesheet" type="text/css" href="/css/auth.css" /> 
     <link rel="stylesheet/less" type="text/css" href="/css/auth.less" /> 
+
+    <!-- LESS.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.1/less.js" ></script>
+
+    <!-- JS -->
+    <script src="/js/auth.js"></script>  
+
 </head>
 <body>
     <noscript> <%=translation.ENABLE_JS%> </noscript>
     <div class="container">    
-
         <div id="loginbox"> 
+            
             <div class="row justify-content-center">                
                 <div class="earthIcon">
                     <img src="https://img.icons8.com/ultraviolet/120/000000/google-maps-new.png"/>
@@ -30,7 +41,6 @@
                 <div class="panel-heading">
                     <div class="panel-title text-center"> <h3> <%=translation.WELCOME%> </h3></div>
                 </div>     
-    
                 <div class="panel-body">
                     <div class="d-flex justify-content-center">
                         <a href="/auth/google">
@@ -43,8 +53,8 @@
                         </a>
                     </div>   
                 </div>     
-
             </div>  
+
         </div>
     </div>
 

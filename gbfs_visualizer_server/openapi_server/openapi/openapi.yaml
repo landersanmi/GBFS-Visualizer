@@ -6,8 +6,6 @@ info:
 servers:
 - url: /
 tags:
-- description: Operations related with the visualization of data in a map.
-  name: Visualizing
 - description: Operations related with the manipulation of raw data.
   name: RawData
 paths:
