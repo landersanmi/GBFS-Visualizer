@@ -53,5 +53,8 @@ def get_station_status(gbfs_system_id):
     
     resultJson = {}
     resultJson['gbfs_system_id'] = gbfs_system_id
-    resultJson['stations'] = requestStatus['data']['stations']
+    try:
+        resultJson['stations'] = requestStatus['data']['stations']
+    except:
+        raise Exception("Sistema sin estaciones")
     return resultJson
