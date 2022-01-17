@@ -49,5 +49,62 @@ $(document).ready(function() {
       toggle.classList.remove(activeClass);
       mask.classList.remove(activeClass);
     }
+
+    function getLang() {
+      if (navigator.languages != undefined) 
+        return navigator.languages[0]; 
+      return navigator.language;
+    }
+
+    var language;
+    var languageFromQuery = document.getElementById('language').textContent;
+
+    if(languageFromQuery==='noLang' || languageFromQuery ===""){
+      language = getLang();
+    }else{
+      language = languageFromQuery;
+    }
+
+    var lang1, lang2, lang1Parent, lang2Parent;
+    var TOKEN = document.getElementById('token').textContent;
+    console.log("LANG RECIBIDO", language);
+    if(language==='eu_ES') language = 'eu';
+    if(language==='es'){
+      lang1 = document.getElementById('icon_language1');
+      lang1.textContent="EN";
+      lang1Parent = lang1.parentElement;
+      lang1Parent.removeAttribute('href');
+      lang1Parent.setAttribute("href", 'http://127.0.0.1:8080/login?token=' + TOKEN + '&lang=en');
+
+      lang2 =document.getElementById('icon_language2');
+      lang2.textContent="EU";
+      lang2Parent = lang2.parentElement;
+      lang2Parent.removeAttribute('href');
+      lang2Parent.setAttribute("href", 'http://127.0.0.1:8080/login?token=' + TOKEN + '&lang=eu');
+    }else if(language==='eu'){
+      lang1 = document.getElementById('icon_language1');
+      lang1.textContent="EN";
+      lang1Parent = lang1.parentElement;
+      lang1Parent.removeAttribute('href');
+      lang1Parent.setAttribute("href", 'http://127.0.0.1:8080/login?token=' + TOKEN + '&lang=en');
+      
+      lang2 =document.getElementById('icon_language2');
+      lang2.textContent="CA";
+      lang2Parent = lang2.parentElement;
+      lang2Parent.removeAttribute('href');
+      lang2Parent.setAttribute("href", 'http://127.0.0.1:8080/login?token=' + TOKEN + '&lang=es');
+    }else{
+      lang1 = document.getElementById('icon_language1');
+      lang1.textContent="CA";
+      lang1Parent = lang1.parentElement;
+      lang1Parent.removeAttribute('href');
+      lang1Parent.setAttribute("href", 'http://127.0.0.1:8080/login?token=' + TOKEN + '&lang=es');
+      
+      lang2 =document.getElementById('icon_language2');
+      lang2.textContent="EU";
+      lang2Parent = lang2.parentElement;
+      lang2Parent.removeAttribute('href');
+      lang2Parent.setAttribute("href", 'http://127.0.0.1:8080/login?token=' + TOKEN + '&lang=eu');
+    }
   
 });

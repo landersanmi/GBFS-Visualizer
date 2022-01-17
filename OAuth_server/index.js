@@ -12,18 +12,30 @@ const YAML = require('yamljs');
 const SERVER_PORT = 9090;
 var swaggerDoc = YAML.load('./api/openapi.yaml');
 const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var i18n = require("i18n-express");
+var geolang=require("geolang-express");
 
 var app = express();
 
 app.use(bodyParser.json({ limit: '14MB' }));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
 app.set('view engine', 'ejs');
+
+app.use(i18n({
+  translationsPath: path.join(__dirname, 'i18n'),
+  siteLangs: ["en","es", "eu_ES"],
+  defaultLang: 'es',
+  textsVarName: 'translation'
+}));
+
 app.use(session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'SECRET' 
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET' 
 }));
 
 // ###########  API  ########### //
@@ -68,10 +80,12 @@ passport.deserializeUser(function(obj, cb) {
 /*  GOOGLE AUTH  */
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const { Console } = require("console");
+const { State } = require("routing-controllers");
 /* ############################## [API KEYS] ##########################################*/
 const GOOGLE_CLIENT_ID = keys['GOOGLE_CLIENT_ID'];
 const GOOGLE_CLIENT_SECRET = keys['GOOGLE_CLIENT_SECRET'];
 /* ####################################################################################*/
+
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
@@ -126,8 +140,9 @@ app.get('/auth/google/callback',
         console.log("El usuario existe " + user);
       }
     })();
+    
+    res.redirect(301,'http://localhost:8080/login?token=' + token);
 
-    res.redirect('http://localhost:8080/login?token=' + token );
 });
 
 

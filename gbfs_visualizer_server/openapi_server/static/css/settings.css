@@ -61,18 +61,18 @@
   }
 
 
-  #icon_settings_language{
+  #icon_language1, #icon_language2{
     position: absolute;
     top: 23%;
     left: 27%;
     font-size: 1.1em;
   }
   @media (min-width: 480px) and (min-height: 480px) {
-    #icon_settings_language{
+    #icon_language1, #icon_language2{
       font-size: 2.2em;
     }
   }
-  #icon_settings_language:hover{
+  #icon_language1:hover, #icon_language2:hover{
     color:#c10012;
   }
 

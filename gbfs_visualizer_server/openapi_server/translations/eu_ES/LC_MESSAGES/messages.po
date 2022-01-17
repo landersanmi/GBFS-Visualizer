@@ -1,0 +1,64 @@
+# Basque (Spain) translations for GBFS Visualizer.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the GBFS Visualizer
+# project.
+# Lander San Millan Langa <landersanmillan@opendeusto.es>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0 \n"
+"Report-Msgid-Bugs-To: landersanmillan@opendeusto.es\n"
+"POT-Creation-Date: 2022-01-17 12:31+0100\n"
+"PO-Revision-Date: 2022-01-17 13:36+0100\n"
+"Last-Translator: Lander San Millan Langa <landersanmillan@opendeusto.es>\n"
+"Language: eu_ES\n"
+"Language-Team: Spanish <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: openapi_server/templates/base.html:41
+msgid "ENABLE_JS"
+msgstr "JavaScript aktibatu behar duzu GBFS visualizer egoki ikusteko."
+
+#: openapi_server/templates/map.html:183
+msgid "ERROR_LOADING_GBFS"
+msgstr "Errore bat sortu da GBFS-a kargatzean, sartu GBFS izen egoki bat." 
+
+#: openapi_server/templates/map.html:228
+msgid "BIKES_REMAINING"
+msgstr "Bizikletak eskuragarri"
+
+#: openapi_server/templates/map.html:229
+msgid "ANCHORS_REMAINING"
+msgstr "Aingurak eskuragarri"
+
+#: openapi_server/templates/map.html:238
+msgid "NO"
+msgstr "EZ"
+
+#: openapi_server/templates/map.html:240 openapi_server/templates/map.html:242
+msgid "YES"
+msgstr "BAI"
+
+#: openapi_server/templates/map.html:250
+msgid "IS_DISABLED"
+msgstr "¿Desgaituta dago?"
+
+#: openapi_server/templates/map.html:251
+msgid "IS_RESERVED"
+msgstr "¿Erreserbatuta dago?"
+
+#: openapi_server/templates/map.html:320
+msgid "GBFS_SYSTEM"
+msgstr "GBFS Sistema:"
+
+#: openapi_server/templates/map.html:327
+msgid "MIN_BIKES"
+msgstr "Gutxienezko bizikletak:"
+
+#: openapi_server/templates/map.html:333
+msgid "MIN_STATIONS"
+msgstr "Gutxienezko aingurak:"
