@@ -40,6 +40,5 @@ $(document).ready(function(){
         }
     }
 
-    loadSelector('https://raw.githubusercontent.com/landersanmi/GBFS_Systems/main/gbfs_systems.csv');
-    
+    loadSelector('https://raw.githubusercontent.com/landersanmi/GBFS_Visualizer/main/gbfs_visualizer_server/openapi_server/db/gbfs_systems.csv');
 });
