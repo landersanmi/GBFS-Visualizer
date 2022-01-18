@@ -3,6 +3,7 @@ var MongoClient = require('mongodb').MongoClient;
 // Connection URI
 const uri ="mongodb://127.0.0.1:27017/";
 
+// Funcion para insertar un usuario en la BD
 exports.insert = function (userInfo){
     MongoClient.connect (uri, function (err, db) {
         if (err) throw err; 
@@ -14,6 +15,7 @@ exports.insert = function (userInfo){
     });
 }
 
+// Funcion que busca un usuario en la BD en base a su ID.
 exports.findOne = function(userId){
     return new Promise(function(resolve, reject) {
       if (userId.length > 0) {

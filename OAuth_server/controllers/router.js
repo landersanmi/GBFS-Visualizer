@@ -48,7 +48,7 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-/*  GOOGLE AUTH  */
+/*  GOOGLE OAUTH  */
 /* ############################## [API KEYS] ##########################################*/
 const GOOGLE_CLIENT_ID = keys['GOOGLE_CLIENT_ID'];
 const GOOGLE_CLIENT_SECRET = keys['GOOGLE_CLIENT_SECRET'];

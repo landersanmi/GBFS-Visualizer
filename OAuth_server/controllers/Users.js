@@ -24,6 +24,7 @@ const getUser = (req, res, next, user_id) => {
 
 const postUser =  (req, res, next, body, user_id) =>{
   usersService.postUser(body, user_id);
+  // El resultado siempre sera correcto aunque se intente insertar un usuario duplicado
   res.send("200 User Posted");
 };
 
